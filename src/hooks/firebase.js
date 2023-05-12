@@ -20,12 +20,10 @@ const auth = getAuth(app)
 
 
 const writeUserData = async (userId, name, email, password)=>{
+    // console.log(`writing data`)
     const db = getDatabase(app)
-    set(ref(db, 'users/'+ userId), {
-        username:name,
-        email:email,
-        password:password
-    })
+    const usersListInDB = ref(db, 'users')
+    push(usersListInDB, {id:userId, username:name, email:email, password:password})
 
 }
 

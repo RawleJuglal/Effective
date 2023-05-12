@@ -1,6 +1,6 @@
 import React from 'react'
 import { nanoid } from 'nanoid';
-import { useLoaderData, Form, useActionData, useNavigation } from 'react-router-dom'
+import { useLoaderData, redirect, Form, useActionData, useNavigation } from 'react-router-dom'
 import { writeUserData } from '../../hooks/firebase';
 
 const loader = async()=>{
@@ -8,10 +8,11 @@ const loader = async()=>{
 }
 
 const action = async({ request })=>{
-    console.log('action called')
+    // console.log('action called')
     const formData = await request.formData()
     const email = formData.get('email')
     const password = formData.get('password')
+    const errors = {};
 
     if (typeof email !== "string" || !email.includes("@")) {
         errors.email =
@@ -28,7 +29,7 @@ const action = async({ request })=>{
     }
     try{
         await writeUserData(nanoid(),'ghostprime', email, password)
-        return redirect('/')
+        return redirect('/todo')
     } catch(err){
         return err
     }
@@ -43,7 +44,7 @@ const SignUp = ()=>{
     return(
         <div className='--signup-page-container'>
             <h1>Sign Up Page</h1>
-            <Form method="POST" replace>
+            <Form method="post" replace>
                 <input type="text" name="email" placeholder='email'/>
                 {errors?.email && <span>{errors.email}</span>}
                 <input type="password" name="password" placeholder='password'/>
