@@ -1,7 +1,7 @@
 import React from 'react'
 import { nanoid } from 'nanoid';
 import { useLoaderData, redirect, Form, useActionData, useNavigation } from 'react-router-dom'
-import { writeUserData } from '../../hooks/firebase';
+import { createUser } from '../../hooks/firebase';
 
 const loader = async()=>{
     return null;
@@ -28,7 +28,7 @@ const action = async({ request })=>{
         return errors;
     }
     try{
-        await writeUserData(nanoid(),'ghostprime', email, password)
+        await createUser(email, password)
         return redirect('/todo')
     } catch(err){
         return err
@@ -42,7 +42,7 @@ const SignUp = ()=>{
     const navigation = useNavigation()
 
     return(
-        <div className='--signup-page-container'>
+        <main className='--signup-page-container'>
             <h1>Sign Up Page</h1>
             <Form method="post" replace>
                 <input type="text" name="email" placeholder='email'/>
@@ -53,7 +53,7 @@ const SignUp = ()=>{
                     {navigation.state === 'submitting' ? 'Creating User...' : 'Sign Up'}
                 </button>
             </Form>
-        </div>
+        </main>
     )
 }
 

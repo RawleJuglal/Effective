@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter,createRoutesFromElements, RouterProvider, Route } from 'react-router-dom'
-import { auth } from './hooks/firebase'
 import Layout from './components/Layout/Layout.jsx'
 import { Error } from './components/Error/Error'
 import {Login, loader as loginLoader} from './pages/Login/Login'

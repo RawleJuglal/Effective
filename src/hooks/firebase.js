@@ -1,8 +1,9 @@
 import { process } from "../../env";
 import {initializeApp} from "firebase/app";
-import { getAuth } from 'firebase/auth'
+import { getAuth, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
 import { getDatabase, ref, push, onValue, remove } from "firebase/database";
 import "firebase/database";
+import { redirect } from "react-router-dom";
 
 const firebaseConfig = {
     apiKey: process.env.OPENAI_API_KEY,
@@ -19,12 +20,35 @@ const auth = getAuth(app)
 
 
 
-const writeUserData = async (userId, name, email, password)=>{
-    // console.log(`writing data`)
-    const db = getDatabase(app)
-    const usersListInDB = ref(db, 'users')
-    push(usersListInDB, {id:userId, username:name, email:email, password:password})
 
+
+const createUser = async (email, password)=>{
+    // const db = getDatabase(app)
+    // const usersListInDB = ref(db, 'users')
+    // push(usersListInDB, {id:userId, username:name, email:email, password:password})
+    try{
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                console.log(`U:${userCredential}`)
+                const user = userCredential.user
+            })
+    } catch(error){
+        throw new Error (error.message)
+    }
 }
 
-export {auth, writeUserData};
+const loginUser = async (email, password)=>{
+    return null;
+}
+
+const logoutUser = ()=>{
+    signOut(auth).then(() => {
+        console.log('you successfully logged out')
+        return redirect(`/`)
+    }).catch((error) => {
+        throw new Error (error.message)
+    });
+}
+
+
+export {createUser, loginUser, logoutUser};
