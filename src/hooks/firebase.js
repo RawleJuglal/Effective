@@ -23,22 +23,32 @@ const auth = getAuth(app)
 
 
 const createUser = async (email, password)=>{
-    // const db = getDatabase(app)
-    // const usersListInDB = ref(db, 'users')
-    // push(usersListInDB, {id:userId, username:name, email:email, password:password})
     try{
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                console.log(`U:${userCredential}`)
+                console.log(userCredential)
                 const user = userCredential.user
             })
     } catch(error){
-        throw new Error (error.message)
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        throw new Error({errorCode, errorMessage})
     }
 }
 
 const loginUser = async (email, password)=>{
-    return null;
+    try {
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed in 
+                const user = userCredential.user;
+                return user;
+            })
+    } catch (error) {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        throw new Error({errorCode, errorMessage})
+    }
 }
 
 const logoutUser = ()=>{
@@ -46,7 +56,9 @@ const logoutUser = ()=>{
         console.log('you successfully logged out')
         return redirect(`/`)
     }).catch((error) => {
-        throw new Error (error.message)
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        throw new Error({errorCode, errorMessage})
     });
 }
 
