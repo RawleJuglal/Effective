@@ -21,7 +21,11 @@ const router = createBrowserRouter(createRoutesFromElements(
       element={<SignUp />} 
       loader={signupLoader}
       action={signupAction}/>
-      <Route path='todo' element={<Home />} loader={homeLoader} />
+      <Route 
+        path='todo' 
+        element={<Home />} 
+        loader={homeLoader} 
+      />
   </Route>
 ))
 

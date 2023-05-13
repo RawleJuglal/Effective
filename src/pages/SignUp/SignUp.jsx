@@ -10,6 +10,7 @@ const loader = async()=>{
 const action = async({ request })=>{
     // console.log('action called')
     const formData = await request.formData()
+    const username = formData.get('username')
     const email = formData.get('email')
     const password = formData.get('password')
     const errors = {};
@@ -28,7 +29,7 @@ const action = async({ request })=>{
         return errors;
     }
     try{
-        await createUser(email, password)
+        await createUser(username, email, password)
         return redirect('/todo')
     } catch(err){
         return err
@@ -44,6 +45,8 @@ const SignUp = ()=>{
         <main className='--signup-page-container'>
             <h1>Sign Up Page</h1>
             <Form method="post" replace>
+                <input type="text" name="username" placeholder='username'/>
+                {errors?.username && <span>{errors.username}</span>}
                 <input type="text" name="email" placeholder='email'/>
                 {errors?.email && <span>{errors.email}</span>}
                 <input type="password" name="password" placeholder='password'/>

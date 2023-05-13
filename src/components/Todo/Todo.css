@@ -1,0 +1,7 @@
+.--todo-input-container{
+    margin:0 var(--sixteenPX);
+}
+
+.--todo-item-input{
+    width:100%;
+}

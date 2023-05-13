@@ -1,7 +1,7 @@
 import { process } from "../../env";
 import {initializeApp} from "firebase/app";
-import { getAuth, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
-import { getDatabase, ref, push, onValue, remove } from "firebase/database";
+import { getAuth, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth'
+import { getDatabase, ref, push, remove} from "firebase/database";
 import "firebase/database";
 import { redirect } from "react-router-dom";
 
@@ -17,17 +17,18 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app)
+const db = getDatabase(app)
+const todoListInDB = ref(db, 'todoListEffective')
 
 
-
-
-
-const createUser = async (email, password)=>{
+//SignUp
+const createUser = async (name, email, password)=>{
     try{
-        createUserWithEmailAndPassword(auth, email, password)
+       createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                console.log(userCredential)
-                const user = userCredential.user
+                updateProfile(userCredential.user.auth.currentUser,{
+                    displayName: name
+                })
             })
     } catch(error){
         const errorCode = error.code;
@@ -35,13 +36,14 @@ const createUser = async (email, password)=>{
         throw new Error({errorCode, errorMessage})
     }
 }
-
+//SignIn
 const loginUser = async (email, password)=>{
     try {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in 
                 const user = userCredential.user;
+                console.log(user)
                 return user;
             })
     } catch (error) {
@@ -50,7 +52,7 @@ const loginUser = async (email, password)=>{
         throw new Error({errorCode, errorMessage})
     }
 }
-
+//SignOut
 const logoutUser = ()=>{
     signOut(auth).then(() => {
         console.log('you successfully logged out')
@@ -61,6 +63,20 @@ const logoutUser = ()=>{
         throw new Error({errorCode, errorMessage})
     });
 }
+//Add to DB
+const handleAddItemToList = (item)=>{
+    if(item !== ''){
+        push(todoListInDB, item)
+    }
+}
+
+const handleRemoveItemFromList = (item)=>{
+    if(item.detail === 2){
+        let exactLocationOfItemInDB = ref(db, `todoListEffective/${item.target.id}`)
+        remove(exactLocationOfItemInDB)
+    }
+    
+}
 
 
-export {createUser, loginUser, logoutUser};
+export {createUser, loginUser, logoutUser, handleAddItemToList, handleRemoveItemFromList, todoListInDB, };
