@@ -6,6 +6,7 @@ import { Error } from './components/Error/Error'
 import {Login, loader as loginLoader, action as loginAction} from './pages/Login/Login'
 import {Home, loader as homeLoader } from './pages/Home/Home.jsx'
 import {SignUp, loader as signupLoader, action as signupAction} from './pages/SignUp/SignUp'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css'
 
 const router = createBrowserRouter(createRoutesFromElements(

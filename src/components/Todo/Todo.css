@@ -1,7 +1,28 @@
-.--todo-input-container{
+.--todo-input-container,
+.--todo-list-container{
     margin:0 var(--sixteenPX);
 }
 
-.--todo-item-input{
-    width:100%;
+.--todo-list-input-group{
+    background-color:var(--mediumSlateBlue);    
+    border-radius:.375rem;
+}
+
+.--todo-list-input-group > .input-group-text{
+    background-color:var(--mediumSlateBlue);
+    border:none;
+}
+
+
+.--todo-list-item{
+    margin:unset !important;
+    padding:1rem 1rem;
+    color:var(--mintCream) !important;
+    max-width:75%;
+    letter-spacing:.0125rem;
+}
+
+.--todo-list-remove{
+    margin-left:auto !important;
+    color:var(--mintCream) !important;
 }

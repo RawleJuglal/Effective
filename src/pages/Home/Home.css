@@ -3,7 +3,18 @@
 }
 .--home-nav-door{
     margin-left:auto;
+    margin-right:var(--eightPX);
+    color:var(--mintCream);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
 }
+
+.--home-nav-door > span{
+    margin-left:var(--fourPX);
+    
+}
+
 .--home-turtle-img{
     width:200px;
     height:200px;

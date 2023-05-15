@@ -3,7 +3,6 @@ import {initializeApp} from "firebase/app";
 import { getAuth, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { getDatabase, ref, push, remove} from "firebase/database";
 import "firebase/database";
-import { redirect } from "react-router-dom";
 
 const firebaseConfig = {
     apiKey: process.env.OPENAI_API_KEY,
@@ -53,10 +52,9 @@ const loginUser = async (email, password)=>{
     }
 }
 //SignOut
-const logoutUser = ()=>{
+const logoutUser = async()=>{
     signOut(auth).then(() => {
         console.log('you successfully logged out')
-        return redirect(`/`)
     }).catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
@@ -71,11 +69,9 @@ const handleAddItemToList = (item)=>{
 }
 
 const handleRemoveItemFromList = (item)=>{
-    if(item.detail === 2){
+    console.log(item.target.id)
         let exactLocationOfItemInDB = ref(db, `todoListEffective/${item.target.id}`)
-        remove(exactLocationOfItemInDB)
-    }
-    
+        remove(exactLocationOfItemInDB)   
 }
 
 

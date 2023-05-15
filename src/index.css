@@ -53,6 +53,10 @@ table {
 	border-spacing: 0;
 }
 
+a:hover{
+	cursor: pointer;
+}
+
 *, *::before, *::after{
     box-sizing: border-box;
 }
@@ -83,6 +87,8 @@ table {
 }
 
 .block{display:block;}
+.visible{visibility: visible;}
+.hidden{visibility: hidden;}
 
 .IVpt{font-size: var(--fourPX);}
 .VIIIpt{font-size:var(--eightPX)}
@@ -90,6 +96,9 @@ table {
 .XXpt{font-size:var(--twentyPX)}
 .XXIVpt{font-size: var(--twentyfourPX);}
 .XXXIIpt{font-size: var(--thirtytwoPX);}
+
+.strikethrough{text-decoration: line-through;}
+
 
 .medium{font-weight:500}
 .bold{font-weight:700}
@@ -103,7 +112,6 @@ table {
 
 input[type='text']{
 	font-family: var(--primary-font);
-	padding:var(--sixteenPX);
 }
 
 .btn{
